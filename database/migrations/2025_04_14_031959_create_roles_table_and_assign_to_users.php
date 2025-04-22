@@ -25,7 +25,7 @@ return new class extends Migration {
         // Agregar campo role_id a la tabla users
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('role_id')->nullable()->after('email')
-                  ->constrained('roles')->onDelete('set null');
+                ->constrained('roles')->onDelete('set null');
         });
 
         // Obtener ID del rol Administrador
