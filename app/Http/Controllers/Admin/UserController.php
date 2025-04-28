@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('borrado', 0)->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -98,7 +98,8 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id); 
-        $user->delete();
+        $user->borrado=1;
+        $user->save();
         return redirect()->route('admin.users.index')->with('success', 'Usuario eliminado.');
     }
 }
