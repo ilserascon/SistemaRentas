@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ClientesController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AlmacenController;  // Se agregó esta línea para importar el controlador AlmacenController
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,5 +36,9 @@ Auth::routes();
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
-
 });
+
+// Se añadió esta línea para registrar las rutas del controlador "AlmacenController"
+Route::resource('almacen', AlmacenController::class);  // Esta ruta se añadió para gestionar las operaciones del "almacen"
+
+
