@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,13 @@ Route::get('/', function () {
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
+Route::get('clientes/agregar',     [ClientesController::class, 'create'])->name('clientes.create');
+Route::post('clientes/agregar',    [ClientesController::class, 'store'])->name('clientes.store');
+Route::get('clientes/{id}',        [ClientesController::class, 'item'])->name('clientes.item');
+Route::get('clientes/{id}/edit',   [ClientesController::class, 'edit'])->name('clientes.edit');
+Route::put('clientes/{id}',        [ClientesController::class, 'update'])->name('clientes.update'); 
+Route::delete('clientes/{id}/delete', [ClientesController::class, 'delete'])->name('clientes.delete');
 
 /*Route::middleware(['auth'])->group(function () {
     Route::resource('admin/users', App\Http\Controllers\Admin\UserController::class);
@@ -28,4 +36,5 @@ Auth::routes();
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+
 });

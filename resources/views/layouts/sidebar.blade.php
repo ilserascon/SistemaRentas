@@ -12,7 +12,15 @@
         <li class="{{ request()->is('admin/users*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fas fa-users"></i> <span>Usuarios</span></a>
         </li>
+        <li class="{{ request()->is('clientes*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('clientes.index') }}"><i class="fas fa-user-tie"></i> <span>Clientes</span></a>
+        </li>
+      @elseif (Auth::check() && Auth::user()->role && Auth::user()->role->nombre === 'Estandar')
+        <li class="{{ request()->is('clientes*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('clientes.index') }}"><i class="fas fa-user-tie"></i> <span>Clientes</span></a>
+        </li>
       @endif
+      
     </ul>
   </aside>
 </div>
