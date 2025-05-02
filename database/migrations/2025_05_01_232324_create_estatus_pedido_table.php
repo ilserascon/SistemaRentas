@@ -19,6 +19,7 @@ return new class extends Migration
 
         DB::table('estatus_pedido')->insert([
             ['descripcion' => 'Solicitado'],
+            ['descripcion' => 'Asignado'],
             ['descripcion' => 'En Entrega'],
             ['descripcion' => 'En Renta'],
             ['descripcion' => 'Terminado'],
