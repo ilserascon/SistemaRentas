@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('id_tipo_falla')->references('id')->on('tipo_fallas')->onDelete('cascade');
-            $table->foreign('id_clasificacion_falla')->references('id')->on('clasificacion_falla')->onDelete('cascade');
+            $table->foreign('id_clasificacion_falla')->references('id')->on('clasificacion_fallas')->onDelete('cascade');
             $table->foreign('id_maquinaria')->references('id')->on('maquinaria')->onDelete('cascade');
             $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
         });

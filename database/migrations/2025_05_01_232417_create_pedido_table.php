@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->foreign('id_cliente')->references('id')->on('clientes')->onDelete('cascade');
             $table->foreign('id_maquinaria')->references('id')->on('maquinaria')->onDelete('cascade');
-            $table->foreign('id_repartidor')->references('id')->on('repartidor')->onDelete('cascade');
+            $table->foreign('id_repartidor')->references('id')->on('repartidores')->onDelete('cascade');
             $table->foreign('id_estatus_pedido')->references('id')->on('estatus_pedido')->onDelete('cascade');
         });
     }
