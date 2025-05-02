@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('pedido', function (Blueprint $table) {
             $table->id();
             $table->string('folio');
-            $table->string('fecha_entrega');
-            $table->string('fecha_devolucion');
-            $table->string('descripcion');
+            $table->datetime('fecha_en_entrega');
+            $table->datetime('fecha_entrega_solicitada');
+            $table->datetime('fecha_devolucion_solicitada');
+            $table->string('observacion');
             $table->unsignedBigInteger('id_cliente');
             $table->unsignedBigInteger('id_maquinaria');
             $table->unsignedBigInteger('id_repartidor');
