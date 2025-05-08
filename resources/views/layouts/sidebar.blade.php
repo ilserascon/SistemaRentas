@@ -34,6 +34,12 @@
           <a class="nav-link" href="{{ route('clientes.index') }}"><i class="fas fa-user-tie"></i> <span>Clientes</span></a>
         </li>
       @endif
+
+      <li class="{{ request()->is('pedidos*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('pedidos.index') }}">
+          <i class="fas fa-warehouse"></i> <span>Pedidos</span>
+        </a>
+      </li>
       
     </ul>
   </aside>
