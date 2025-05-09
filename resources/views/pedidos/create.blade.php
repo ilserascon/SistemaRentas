@@ -20,11 +20,11 @@
             @error('folio') <div class="invalid-feedback">{{ $message }}</div> @enderror
           </div>
 
-          <div class="form-group">
+          {{-- <div class="form-group">
             <label for="fecha_en_entrega">Fecha en Entrega</label>
             <input type="datetime-local" name="fecha_en_entrega" class="form-control @error('fecha_en_entrega') is-invalid @enderror" value="{{ old('fecha_en_entrega') }}" required>
             @error('fecha_en_entrega') <div class="invalid-feedback">{{ $message }}</div> @enderror
-          </div>
+          </div> --}}
 
           <div class="form-group">
             <label for="fecha_entrega_solicitada">Fecha de Entrega Solicitada</label>
@@ -39,12 +39,12 @@
           </div>
 
           <div class="form-group">
-            <label for="observacion">Observación</label>
-            <textarea name="observacion" class="form-control @error('observacion') is-invalid @enderror">{{ old('observacion') }}</textarea>
-            @error('observacion') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            <label for="ubicacion_url">Ubicacion</label>
+            <textarea name="ubicacion_url" class="form-control @error('ubicacion_url') is-invalid @enderror">{{ old('ubicacion_url') }}</textarea>
+            @error('ubicacion_url') <div class="invalid-feedback">{{ $message }}</div> @enderror
           </div>
 
-          <div class="form-group">
+          {{-- <div class="form-group">
             <label for="id_usuario">Usuario</label>
             <select name="id_usuario" class="form-control @error('id_usuario') is-invalid @enderror" required>
               <option value="">Seleccione un usuario</option>
@@ -53,7 +53,7 @@
               @endforeach
             </select>
             @error('id_usuario') <div class="invalid-feedback">{{ $message }}</div> @enderror
-          </div>
+          </div> --}}
 
           <div class="form-group">
             <label for="id_tipo_maquinaria">Tipo de maquinaria</label>

@@ -12,3 +12,4 @@ class Repartidor extends Model
 
     public $timestamps = true;
 }
+

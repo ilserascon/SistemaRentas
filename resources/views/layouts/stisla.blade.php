@@ -31,12 +31,5 @@
   <script src="{{ asset('stisla/assets/modules/moment.min.js') }}"></script>
   <script src="{{ asset('stisla/assets/js/scripts.js') }}"></script>
 
-  {{-- <script>
-    $(document).on('hidden.bs.modal', function () {
-      $('.modal-backdrop').remove();       // elimina backdrop duplicados
-      $('body').removeClass('modal-open'); // quita clase de bloqueo
-      $('body').css('overflow', 'auto');   // reactiva scroll normal
-    });
-  </script> --}}
 </body>
 </html>

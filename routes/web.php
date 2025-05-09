@@ -1,54 +1,56 @@
 <?php
 
+// Importamos los controladores necesarios
 use App\Http\Controllers\ClientesController;
-use App\Http\Controllers\PedidosController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AlmacenController;  // Se agregó esta línea para importar el controlador AlmacenController
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\RepartidorController;
+use App\Http\Controllers\MaquinariaController;
+use App\Http\Controllers\AlmacenController; 
+use App\Http\Controllers\PedidosController;
 
+// Ruta principal que redirige al login
 Route::get('/', function () {
     return redirect('/login'); 
 });
 
-
+// Ruta a la página de inicio una vez logueado
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
-Route::get('clientes/agregar',     [ClientesController::class, 'create'])->name('clientes.create');
-Route::post('clientes/agregar',    [ClientesController::class, 'store'])->name('clientes.store');
-Route::get('clientes/{id}',        [ClientesController::class, 'item'])->name('clientes.item');
-Route::get('clientes/{id}/edit',   [ClientesController::class, 'edit'])->name('clientes.edit');
-Route::put('clientes/{id}',        [ClientesController::class, 'update'])->name('clientes.update'); 
-Route::delete('clientes/{id}/delete', [ClientesController::class, 'delete'])->name('clientes.delete');
 
-Route::get('/pedidos', [PedidosController::class, 'index'])->name('pedidos.index');
-Route::get('pedidos/agregar',     [PedidosController::class, 'create'])->name('pedidos.create');
-Route::post('pedidos/agregar',    [PedidosController::class, 'store'])->name('pedidos.store');
-Route::get('pedidos/{id}',        [PedidosController::class, 'item'])->name('pedidos.item');
-Route::get('pedidos/{id}/edit',   [PedidosController::class, 'edit'])->name('pedidos.edit');
-Route::put('pedidos/{id}',        [PedidosController::class, 'update'])->name('pedidos.update'); 
-Route::delete('pedidos/{id}/delete', [PedidosController::class, 'delete'])->name('pedidos.delete');
-Route::post('/pedidos/{id}/asignar', [PedidosController::class, 'asignar'])->name('pedidos.asignar');
+// Rutas para gestión de clientes
+Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index'); // Mostrar todos los clientes
+Route::get('clientes/agregar', [ClientesController::class, 'create'])->name('clientes.create'); // Formulario para agregar cliente
+Route::post('clientes/agregar', [ClientesController::class, 'store'])->name('clientes.store'); // Guardar nuevo cliente
+Route::get('clientes/{id}', [ClientesController::class, 'item'])->name('clientes.item'); // Ver un cliente específico
+Route::get('clientes/{id}/edit', [ClientesController::class, 'edit'])->name('clientes.edit'); // Formulario para editar cliente
+Route::put('clientes/{id}', [ClientesController::class, 'update'])->name('clientes.update'); // Actualizar cliente
+Route::delete('clientes/{id}/delete', [ClientesController::class, 'delete'])->name('clientes.delete'); // Eliminar cliente
 
-/*Route::middleware(['auth'])->group(function () {
-    Route::resource('admin/users', App\Http\Controllers\Admin\UserController::class);
-});*/
-
+// Rutas de autenticación (login, registro, etc.)
 Auth::routes();
 
+// Rutas protegidas por autenticación y rol de administrador
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class); // CRUD de usuarios solo para admin
 });
 
-// Se añadió esta línea para registrar las rutas del controlador "AlmacenController"
-Route::resource('almacen', AlmacenController::class);  // Esta ruta se añadió para gestionar las operaciones del "almacen"
+// Rutas para almacén (CRUD automático)
+Route::resource('almacen', AlmacenController::class);
 
+// Rutas para repartidores (CRUD automático)
+Route::resource('repartidores', RepartidorController::class);
 
+// Rutas para maquinaria (CRUD automático)
+Route::resource('maquinaria', MaquinariaController::class);
+
+// Rutas para gestión de pedidos
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pedidos', [PedidosController::class, 'index'])->name('pedidos.index');
+    Route::get('pedidos/agregar', [PedidosController::class, 'create'])->name('pedidos.create');
+    Route::post('pedidos/agregar', [PedidosController::class, 'store'])->name('pedidos.store');
+    Route::get('pedidos/{id}', [PedidosController::class, 'item'])->name('pedidos.item');
+    Route::get('pedidos/{id}/edit', [PedidosController::class, 'edit'])->name('pedidos.edit');
+    Route::put('pedidos/{id}', [PedidosController::class, 'update'])->name('pedidos.update');
+    Route::delete('pedidos/{id}/delete', [PedidosController::class, 'delete'])->name('pedidos.delete');
+    Route::post('/pedidos/{id}/asignar', [PedidosController::class, 'asignar'])->name('pedidos.asignar');
+    Route::post('/pedidos/{id}/entregar', [PedidosController::class, 'entregar'])->name('pedidos.entregar');
+});
