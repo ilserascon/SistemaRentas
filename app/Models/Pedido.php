@@ -21,6 +21,7 @@ class Pedido extends Model
         'id_repartidor',
         'id_estatus_pedido',
         'id_tipo_maquinaria',
+        'ubicacion_url',
         'borrado',];
 
         public function usuario()
