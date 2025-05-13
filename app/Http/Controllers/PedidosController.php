@@ -15,6 +15,7 @@ class PedidosController extends Controller
 {
     public function index(Request $request)
     {
+        
         // Obtener los pedidos no borrados
         $query = Pedido::where('borrado', 0);
 
@@ -22,6 +23,20 @@ class PedidosController extends Controller
         if ($request->filled('estatus')) {
             $query->where('id_estatus_pedido', $request->estatus);
         }
+
+        // Cargar los pedidos con sus relaciones
+        $pedidos = $query->with(['cliente', 'tipoMaquinaria', 'maquinaria', 'repartidor', 'estatusPedido', 'usuario'])->get();
+
+        // Obtener todos los repartidores
+        $repartidores = Repartidor::all();
+
+        // Obtener todas las maquinarias
+        $maquinarias = Maquinaria::all();
+
+        // Obtener IDs de maquinarias que están en pedidos en renta
+        $maquinariasEnRenta = Pedido::where('id_estatus_pedido', 2) // 2 = En renta
+            ->pluck('id_maquinaria')
+            ->toArray();
 
         // Cargar los pedidos con sus relaciones
         $pedidos = $query->with(['cliente', 'tipoMaquinaria', 'maquinaria', 'repartidor', 'estatusPedido', 'usuario'])->get();
