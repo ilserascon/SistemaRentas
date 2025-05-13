@@ -13,7 +13,15 @@
 
   <div class="section-body">
     @if (session('success'))
-      <div class="alert alert-success">{{ session('success') }}</div>
+      <script>
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: '{{ session('success') }}',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      </script>
     @endif
 
     <form method="GET" action="{{ route('clientes.index') }}" class="mb-4">
@@ -31,7 +39,6 @@
       </div>
     </form>
     
-
     <div class="card">
       <div class="card-header">
         <h4>Lista de Clientes</h4>
@@ -64,9 +71,9 @@
                 <td>{{ $cliente->created_at->format('d/m/Y') }}</td>
                 <td>
                   <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-warning btn-sm me-2"><i class="fas fa-edit"></i></a>
-                  <form action="{{ route('clientes.delete', $cliente->id) }}" method="POST" class="d-inline me-2">
+                  <form action="{{ route('clientes.delete', $cliente->id) }}" method="POST" class="d-inline me-2" id="delete-form-{{ $cliente->id }}">
                     @csrf @method('DELETE')
-                    <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar usuario?')"><i class="fas fa-trash"></i></button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $cliente->id }})"><i class="fas fa-trash"></i></button>
                   </form>
                 </td>
               </tr>
@@ -79,4 +86,25 @@
     </div>
   </div>
 </div>
+
+<!-- SweetAlert Delete Confirmation Script -->
+<script>
+  function confirmDelete(id) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás recuperar este cliente una vez eliminado.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Enviar el formulario de eliminación si el usuario confirma
+        document.getElementById('delete-form-' + id).submit();
+      }
+    });
+  }
+</script>
+
 @endsection

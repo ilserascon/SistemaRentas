@@ -13,7 +13,15 @@
 
     <div class="section-body">
         @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
         @endif
 
         <div class="card">
@@ -42,10 +50,10 @@
                                 <!-- Mostrar solo los repartidores no eliminados -->
                                 @if($r->borrado == 0)
                                     <a href="{{ route('repartidores.edit', $r->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                    <form action="{{ route('repartidores.destroy', $r->id) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('repartidores.destroy', $r->id) }}" method="POST" class="d-inline" id="delete-form-{{ $r->id }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este repartidor?')"><i class="fas fa-trash"></i></button>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $r->id }})"><i class="fas fa-trash"></i></button>
                                     </form>
                                 @else
                                     <!-- Si está eliminado, mostrar que está eliminado y restaurarlo -->
@@ -66,4 +74,24 @@
         </div>
     </div>
 </div>
+
+<!-- SweetAlert Delete Confirmation Script -->
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'No podrás recuperar este repartidor una vez eliminado.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Enviar el formulario de eliminación si el usuario confirma
+                document.getElementById('delete-form-' + id).submit();
+            }
+        });
+    }
+</script>
 @endsection

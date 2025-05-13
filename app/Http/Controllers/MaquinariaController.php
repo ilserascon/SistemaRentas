@@ -50,7 +50,7 @@ class MaquinariaController extends Controller
 
         Maquinaria::create($request->all());
 
-        return redirect()->route('maquinaria.index');
+        return redirect()->route('maquinaria.index')->with('success', 'Maquinaria creada correctamente.');
     }
 
     // Mostrar el formulario de edición
@@ -78,7 +78,7 @@ class MaquinariaController extends Controller
 
         $maquinaria->update($request->all());
 
-        return redirect()->route('maquinaria.index');
+        return redirect()->route('maquinaria.index')->with('success', 'Maquinaria actualizada correctamente.');
     }
 
     // Eliminar lógicamente la maquinaria
@@ -87,6 +87,6 @@ class MaquinariaController extends Controller
         $maquinaria = Maquinaria::findOrFail($id);
         $maquinaria->update(['borrado' => true]);
 
-        return redirect()->route('maquinaria.index');
+        return redirect()->route('maquinaria.index')->with('success', 'Maquinaria eliminada correctamente.');
     }
 }
