@@ -26,15 +26,50 @@
           </a>
         </li>
 
+        {{-- Clientes --}}
         <li class="{{ request()->is('clientes*') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('clientes.index') }}"><i class="fas fa-user-tie"></i> <span>Clientes</span></a>
+          <a class="nav-link" href="{{ route('clientes.index') }}">
+            <i class="fas fa-user-tie"></i> <span>Clientes</span>
+          </a>
         </li>
+
+        {{-- Repartidores --}}
+        <li class="{{ request()->is('repartidores*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('repartidores.index') }}">
+            <i class="fas fa-motorcycle"></i> <span>Repartidores</span>
+          </a>
+        </li>
+
+        {{-- Maquinaria (Nuevo módulo) --}}
+        <li class="{{ request()->is('maquinaria*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('maquinaria.index') }}">
+            <i class="fas fa-cogs"></i> <span>Maquinaria</span>
+          </a>
+        </li>
+
       @elseif (Auth::check() && Auth::user()->role && Auth::user()->role->nombre === 'Estandar')
         <li class="{{ request()->is('clientes*') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('clientes.index') }}"><i class="fas fa-user-tie"></i> <span>Clientes</span></a>
+          <a class="nav-link" href="{{ route('clientes.index') }}">
+            <i class="fas fa-user-tie"></i> <span>Clientes</span>
+          </a>
         </li>
       @endif
-      
+      <li class="{{ request()->is('entregas*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('entregas.index') }}">
+          <i class="fas fa-user-tie"></i> <span>Entregas</span>
+        </a>
+      </li>
+      <li class="{{ request()->is('recibidos*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('recibidos.index') }}">
+          <i class="fas fa-user-tie"></i> <span>Recibidos</span>
+        </a>
+      </li>
+      <li class="{{ request()->is('pedidos*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('pedidos.index') }}">
+          <i class="fas fa-warehouse"></i> <span>Pedidos</span>
+        </a>
+      </li>
     </ul>
-  </aside>
+  </aside>
 </div>
+
