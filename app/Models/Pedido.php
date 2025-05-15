@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model
 {
+    use HasFactory;
+
     protected $table = 'pedido';
 
     protected $fillable = [
@@ -15,41 +17,44 @@ class Pedido extends Model
         'fecha_entrega_solicitada',
         'fecha_devolucion_solicitada',
         'observacion',
-        'id_usuario',
         'id_cliente',
         'id_maquinaria',
         'id_repartidor',
         'id_estatus_pedido',
+        'id_usuario',
         'id_tipo_maquinaria',
         'ubicacion_url',
-        'borrado',];
+        'borrado',
+    ];
 
-        public function usuario()
-        {
-            return $this->belongsTo(User::class, 'id_usuario');
-        }
-        
-        public function tipoMaquinaria()
-        {
-            return $this->belongsTo(TipoMaquinaria::class, 'id_tipo_maquinaria');
-        }
-        
-        public function cliente()
-        {
-            return $this->belongsTo(Cliente::class, 'id_cliente');
-        }
-        
-        public function maquinaria()
-        {
-            return $this->belongsTo(Maquinaria::class, 'id_maquinaria');
-        }
-        
-        public function repartidor()
-        {
-            return $this->belongsTo(Repartidor::class, 'id_repartidor');
-        }
-        
-        public function estatusPedido()
-        {
-            return $this->belongsTo(EstatusPedido::class, 'id_estatus_pedido');}
+    // Relaciones
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario');
+    }
+
+    public function tipoMaquinaria()
+    {
+        return $this->belongsTo(TipoMaquinaria::class, 'id_tipo_maquinaria');
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'id_cliente');
+    }
+
+    public function maquinaria()
+    {
+        return $this->belongsTo(Maquinaria::class, 'id_maquinaria');
+    }
+
+    public function repartidor()
+    {
+        return $this->belongsTo(Repartidor::class, 'id_repartidor');
+    }
+
+    public function estatusPedido()
+    {
+        return $this->belongsTo(EstatusPedido::class, 'id_estatus_pedido');
+    }
 }

@@ -8,8 +8,12 @@ class Repartidor extends Model
 {
     protected $table = 'repartidores';
 
-    protected $fillable = ['nombre', 'telefono', 'email'];
+    protected $fillable = [
+        'nombre',
+        'telefono',
+        'email',
+        'borrado',
+    ];
 
     public $timestamps = true;
 }
-

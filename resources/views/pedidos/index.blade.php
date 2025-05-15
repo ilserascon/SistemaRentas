@@ -5,7 +5,7 @@
 @section('content')
 <div class="section">
   <div class="section-header">
-    <h1>pedidos</h1>
+    <h1>Pedidos</h1>
     <div class="section-header-button ml-auto">
       <a href="{{ route('pedidos.create') }}" class="btn btn-primary">Nuevo Pedido</a>
     </div>
@@ -50,12 +50,12 @@
               <th>Repartidor</th>
               <th>Tipo Maquinaria</th>
               <th>Maquinaria</th>
-              <th>Ubicacion</th>
-              <th>Observacion</th>
+              <th>Ubicación</th>
+              <th>Observación</th>
               <th>Fecha de entrega solicitada</th>
-              <th>Fecha de devolucion solicitada</th>
+              <th>Fecha de devolución solicitada</th>
               <th>Estatus</th>
-              <th>Creacion</th>
+              <th>Creación</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -76,7 +76,7 @@
                     -
                   @endif
                 </td>
-                <td>{{ $pedido->observacion ?? 'Sin observaciones'}}</td>
+                <td>{{ $pedido->observacion ?? 'Sin observaciones' }}</td>
                 <td>{{ $pedido->fecha_entrega_solicitada }}</td>
                 <td>{{ $pedido->fecha_devolucion_solicitada }}</td>
                 <td>{{ $pedido->estatusPedido->descripcion ?? 'Sin estatus' }}</td>
@@ -173,18 +173,18 @@
         </button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro que deseas cancelar el pedido con folio <strong>{{ $pedido->folio }}</strong>? 
+        ¿Estás seguro que deseas cancelar el pedido con folio <strong>{{ $pedido->folio }}</strong>?
         <p><strong>Por favor, agrega una observación:</strong></p>
-        <div class="form-group">
-          <textarea name="observacion" class="form-control" placeholder="Escribe una observación..." required></textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
         <form action="{{ route('pedidos.delete', $pedido->id) }}" method="POST">
           @csrf
           @method('DELETE')
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-danger">Sí, Cancelar</button>
+          <div class="form-group">
+            <textarea name="observacion" class="form-control" placeholder="Escribe una observación..." required></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-danger">Sí, Cancelar</button>
+          </div>
         </form>
       </div>
     </div>
@@ -193,3 +193,4 @@
 @endforeach
 
 @endsection
+
