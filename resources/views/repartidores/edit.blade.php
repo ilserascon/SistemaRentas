@@ -17,20 +17,47 @@
 
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ $repartidor->nombre }}" required>
-                        @error('nombre') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <input 
+                            type="text" 
+                            name="nombre" 
+                            id="nombre" 
+                            class="form-control @error('nombre') is-invalid @enderror" 
+                            value="{{ old('nombre', $repartidor->nombre) }}" 
+                            required
+                        >
+                        @error('nombre') 
+                            <div class="invalid-feedback">{{ $message }}</div> 
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="telefono">Teléfono</label>
-                        <input type="text" name="telefono" id="telefono" class="form-control @error('telefono') is-invalid @enderror" value="{{ $repartidor->telefono }}" required>
-                        @error('telefono') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <input 
+                            type="text" 
+                            name="telefono" 
+                            id="telefono" 
+                            class="form-control @error('telefono') is-invalid @enderror" 
+                            value="{{ old('telefono', $repartidor->telefono) }}" 
+                            required
+                        >
+                        @error('telefono') 
+                            <div class="invalid-feedback">{{ $message }}</div> 
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ $repartidor->email }}" required>
-                        @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <input 
+                            type="email" 
+                            name="email" 
+                            id="email" 
+                            class="form-control @error('email') is-invalid @enderror" 
+                            value="{{ old('email', $repartidor->email) }}" 
+                            required
+                        >
+                        @error('email') 
+                            <div class="invalid-feedback">{{ $message }}</div> 
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-primary">Actualizar</button>
@@ -41,3 +68,4 @@
     </div>
 </div>
 @endsection
+

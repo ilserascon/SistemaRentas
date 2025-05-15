@@ -33,3 +33,10 @@
 
 </body>
 </html>
+
+<!-- En el archivo layouts.stisla (en la sección <head>) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css">
+
+<!-- Al final del archivo antes de </body> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.js"></script>
+

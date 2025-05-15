@@ -18,20 +18,23 @@ class Maquinaria extends Model
         'descripcion',
         'id_tipo_maquinaria',
         'id_almacen',
-        'borrado'
+        'borrado',
     ];
 
+    protected $casts = [
+        'borrado' => 'boolean',
+    ];
+
+    // Relación con TipoMaquinaria
     public function tipoMaquinaria()
     {
         return $this->belongsTo(TipoMaquinaria::class, 'id_tipo_maquinaria');
     }
 
+    // Relación con Almacen
     public function almacen()
     {
         return $this->belongsTo(Almacen::class, 'id_almacen');
     }
-
-    protected $casts = [
-        'borrado' => 'boolean',
-    ];
 }
+

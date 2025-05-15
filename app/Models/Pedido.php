@@ -23,11 +23,37 @@ class Pedido extends Model
         'id_estatus_pedido',
         'id_usuario',
         'id_tipo_maquinaria',
+        'ubicacion_url',
         'borrado',
     ];
 
-    // Relación con el modelo EstatusPedido
-    public function estatus()
+    // Relaciones
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario');
+    }
+
+    public function tipoMaquinaria()
+    {
+        return $this->belongsTo(TipoMaquinaria::class, 'id_tipo_maquinaria');
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'id_cliente');
+    }
+
+    public function maquinaria()
+    {
+        return $this->belongsTo(Maquinaria::class, 'id_maquinaria');
+    }
+
+    public function repartidor()
+    {
+        return $this->belongsTo(Repartidor::class, 'id_repartidor');
+    }
+
+    public function estatusPedido()
     {
         return $this->belongsTo(EstatusPedido::class, 'id_estatus_pedido');
     }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class MaquinariaController extends Controller
 {
+    // Mostrar el listado de máquinas con filtros
     public function index(Request $request)
     {
         $query = Maquinaria::with('tipoMaquinaria') // Cargar la relación
@@ -27,6 +28,7 @@ class MaquinariaController extends Controller
         return view('maquinaria.index', compact('maquinarias'));
     }
 
+    // Mostrar el formulario de creación
     public function create()
     {
         $tipos_maquinaria = TipoMaquinaria::all();
@@ -34,6 +36,7 @@ class MaquinariaController extends Controller
         return view('maquinaria.create', compact('tipos_maquinaria', 'almacenes'));
     }
 
+    // Guardar la nueva maquinaria
     public function store(Request $request)
     {
         $request->validate([
@@ -47,9 +50,10 @@ class MaquinariaController extends Controller
 
         Maquinaria::create($request->all());
 
-        return redirect()->route('maquinaria.index');
+        return redirect()->route('maquinaria.index')->with('success', 'Maquinaria creada correctamente.');
     }
 
+    // Mostrar el formulario de edición
     public function edit($id)
     {
         $maquinaria = Maquinaria::findOrFail($id);
@@ -58,6 +62,7 @@ class MaquinariaController extends Controller
         return view('maquinaria.edit', compact('maquinaria', 'tipos_maquinaria', 'almacenes'));
     }
 
+    // Actualizar los datos de la maquinaria
     public function update(Request $request, $id)
     {
         $maquinaria = Maquinaria::findOrFail($id);
@@ -73,14 +78,16 @@ class MaquinariaController extends Controller
 
         $maquinaria->update($request->all());
 
-        return redirect()->route('maquinaria.index');
+        return redirect()->route('maquinaria.index')->with('success', 'Maquinaria actualizada correctamente.');
     }
 
+    // Eliminar lógicamente la maquinaria
     public function destroy($id)
     {
         $maquinaria = Maquinaria::findOrFail($id);
         $maquinaria->update(['borrado' => true]);
 
-        return redirect()->route('maquinaria.index');
+        return redirect()->route('maquinaria.index')->with('success', 'Maquinaria eliminada correctamente.');
     }
 }
+
