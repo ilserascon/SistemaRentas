@@ -17,12 +17,14 @@ return new class extends Migration
             $table->unsignedBigInteger('id_clasificacion_falla');
             $table->unsignedBigInteger('id_maquinaria');
             $table->unsignedBigInteger('id_pedido');
+            $table->unsignedBigInteger('id_encargado');
             $table->timestamps();
 
             $table->foreign('id_tipo_falla')->references('id')->on('tipo_fallas')->onDelete('cascade');
             $table->foreign('id_clasificacion_falla')->references('id')->on('clasificacion_fallas')->onDelete('cascade');
             $table->foreign('id_maquinaria')->references('id')->on('maquinaria')->onDelete('cascade');
             $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
+            $table->foreign('id_encargado')->references('id')->on('mecanico')->onDelete('cascade');
         });
     }
 

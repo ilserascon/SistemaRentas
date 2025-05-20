@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('mantenimiento', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_falla');
+            $table->unsignedBigInteger('id_maquinaria');
+            $table->unsignedBigInteger('id_pedido');
+            $table->unsignedBigInteger('id_encargado');
             $table->timestamps();
 
-            $table->foreign('id_falla')->references('id')->on('fallas')->onDelete('cascade');
+            $table->foreign('id_maquinaria')->references('id')->on('maquinaria')->onDelete('cascade');
+            $table->foreign('id_pedido')->references('id')->on('pedido')->onDelete('cascade');
+            $table->foreign('id_encargado')->references('id')->on('mecanico')->onDelete('cascade');
         });
     }
 
