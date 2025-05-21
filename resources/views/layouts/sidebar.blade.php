@@ -50,7 +50,7 @@
         {{-- Pedidos --}}
         <li class="{{ request()->is('pedidos*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('pedidos.index') }}">
-            <i class="fas fa-warehouse"></i> <span>Pedidos</span>
+            <i class="fas fa-clipboard-list"></i> <span>Pedidos</span>
           </a>
         </li>
 
@@ -76,11 +76,9 @@
           <i class="fas fa-box"></i> <span>Recibidos</span>
         </a>
       </li>
-
-      {{-- Pedidos (para todos los roles) --}}
-      <li class="{{ request()->is('pedidos*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('pedidos.index') }}">
-          <i class="fas fa-warehouse"></i> <span>Pedidos</span>
+      <li class="{{ request()->is('mecanicos*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('mecanicos.index') }}">
+          <i class="fas fa-wrench"></i> <span>Mecánicos</span>
         </a>
       </li>
     </ul>
