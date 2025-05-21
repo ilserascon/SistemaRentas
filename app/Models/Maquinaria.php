@@ -22,7 +22,7 @@ class Maquinaria extends Model
     ];
 
     // Relación con TipoMaquinaria
-    public function tipoMaquinaria()
+    public function tipoMaquinaria()    
     {
         return $this->belongsTo(TipoMaquinaria::class, 'id_tipo_maquinaria');
     }

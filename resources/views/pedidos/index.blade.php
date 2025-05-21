@@ -25,6 +25,7 @@
               <option value="{{ $estatus->id }}" {{ request('estatus') == $estatus->id ? 'selected' : '' }}>
                 {{ $estatus->descripcion }}
               </option>
+              
             @endforeach
           </select>
         </div>
@@ -85,15 +86,21 @@
                   <button type="button" class="btn btn-primary btn-sm me-2 mb-2" data-toggle="modal" data-target="#asignarModal-{{ $pedido->id }}">
                     Asignar
                   </button>
-
                   <form action="{{ route('pedidos.entregar', $pedido->id) }}" method="POST" class="d-inline">
                     @csrf
                     <button class="btn btn-success btn-sm me-2 mb-2" onclick="return confirm('¿Marcar este pedido como En entrega?')">Entregar</button>
                   </form>
-
+                  @if($pedido->id_maquinaria)
+                  <button type="button" class="btn btn-warning btn-sm mb-2" data-toggle="modal" data-target="#fallaModal-{{ $pedido->id }}">
+                    Falla
+                  </button>
+                @endif
                   <button type="button" class="btn btn-danger btn-sm mb-2" data-toggle="modal" data-target="#cancelarModal-{{ $pedido->id }}">
                     Cancelar
                   </button>
+                  
+                  
+                  
                 </td>
               </tr>
             @empty
@@ -108,6 +115,8 @@
 
 {{-- Modales para cada pedido --}}
 @foreach ($pedidos as $pedido)
+
+
 <!-- Modal Asignar -->
 <div class="modal fade" id="asignarModal-{{ $pedido->id }}" tabindex="-1" role="dialog" aria-labelledby="asignarModalLabel-{{ $pedido->id }}" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -191,5 +200,58 @@
   </div>
 </div>
 @endforeach
+
+
+
+{{-- Modales para cada pedido --}}
+@foreach ($pedidos as $pedido)
+  <!-- Modal Asignar -->
+  ...
+  <!-- Modal Cancelar -->
+  ...
+  <!-- Modal Falla -->
+  <div class="modal fade" id="fallaModal-{{ $pedido->id }}" tabindex="-1" role="dialog" aria-labelledby="fallaModalLabel-{{ $pedido->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form action="{{ route('fallas.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="id_pedido" value="{{ $pedido->id }}">
+        <input type="hidden" name="id_maquinaria" value="{{ $pedido->id_maquinaria }}">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="fallaModalLabel-{{ $pedido->id }}">Registrar Falla</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="id_tipo_falla-{{ $pedido->id }}">Tipo de Falla</label>
+              <select name="id_tipo_falla" id="id_tipo_falla-{{ $pedido->id }}" class="form-control" required>
+                <option value="">Seleccione un tipo</option>
+                @foreach (\App\Models\TipoFalla::all() as $tipo)
+                  <option value="{{ $tipo->id }}">{{ $tipo->descripcion }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="id_clasificacion_falla-{{ $pedido->id }}">Clasificación</label>
+              <select name="id_clasificacion_falla" id="id_clasificacion_falla-{{ $pedido->id }}" class="form-control" required>
+                <option value="">Seleccione una clasificación</option>
+                @foreach (\App\Models\ClasificacionFalla::all() as $clasificacion)
+                  <option value="{{ $clasificacion->id }}">{{ $clasificacion->descripcion }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning">Registrar Falla</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+@endforeach
+
 
 @endsection

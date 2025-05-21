@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model
+
+
 {
     protected $table = 'pedido';
 
@@ -52,4 +54,12 @@ class Pedido extends Model
         public function estatusPedido()
         {
             return $this->belongsTo(EstatusPedido::class, 'id_estatus_pedido');}
+
+            public function pedidos()
+{
+    return $this->hasMany(Pedido::class, 'id_estatus_pedido');
+}
+
+            
+
 }

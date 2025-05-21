@@ -1,4 +1,4 @@
-@extends('layouts.stisla')
+    @extends('layouts.stisla')
 
 @section('title', 'Editar Maquinaria')
 

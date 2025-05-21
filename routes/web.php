@@ -7,6 +7,7 @@ use App\Http\Controllers\RepartidorController;
 use App\Http\Controllers\MaquinariaController;
 use App\Http\Controllers\AlmacenController; 
 use App\Http\Controllers\PedidosController;
+use App\Http\Controllers\FallaController;
 
 // Ruta principal que redirige al login
 Route::get('/', function () {
@@ -54,3 +55,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pedidos/{id}/asignar', [PedidosController::class, 'asignar'])->name('pedidos.asignar');
     Route::post('/pedidos/{id}/entregar', [PedidosController::class, 'entregar'])->name('pedidos.entregar');
 });
+
+//ruta para ver los pedidos de un cliente
+Route::get('clientes/{id}/pedidos', [ClientesController::class, 'pedidos'])->name('clientes.pedidos');
+
+// ...existing code...
+Route::post('/fallas', [App\Http\Controllers\FallaController::class, 'store'])->name('fallas.store');
+Route::get('/fallas', [App\Http\Controllers\FallaController::class, 'index'])->name('fallas.index');
+// ...existing code...
+

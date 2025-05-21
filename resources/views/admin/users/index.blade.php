@@ -13,7 +13,15 @@
 
   <div class="section-body">
     @if (session('success'))
-      <div class="alert alert-success">{{ session('success') }}</div>
+      <script>
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: {!! json_encode(session('success')) !!},
+          showConfirmButton: false,
+          timer: 1500
+        });
+      </script>
     @endif
 
     <div class="card">
@@ -40,14 +48,14 @@
                 <td>{{ $user->role->nombre ?? '-' }}</td>
                 <td>
                   <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                  <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
+                  <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline" id="delete-user-{{ $user->id }}">
                     @csrf @method('DELETE')
-                    <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar usuario?')"><i class="fas fa-trash"></i></button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmUserDelete({{ $user->id }})"><i class="fas fa-trash"></i></button>
                   </form>
                 </td>
               </tr>
             @empty
-              <tr><td colspan="4" class="text-center">No hay usuarios registrados.</td></tr>
+              <tr><td colspan="5" class="text-center">No hay usuarios registrados.</td></tr>
             @endforelse
           </tbody>
         </table>
@@ -55,4 +63,22 @@
     </div>
   </div>
 </div>
+
+<script>
+  function confirmUserDelete(id) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Este usuario será eliminado permanentemente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById('delete-user-' + id).submit();
+      }
+    });
+  }
+</script>
 @endsection

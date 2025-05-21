@@ -53,6 +53,13 @@
           </a>
           </li>
 
+          {{-- fallas (Nuevo módulo) --}}
+        <li class="{{ request()->is('fallas*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('fallas.index') }}">
+            <i class="fas fa-warehouse"></i> <span>fallas</span>
+          </a>
+          </li>
+
 
 
       @elseif (Auth::check() && Auth::user()->role && Auth::user()->role->nombre === 'Estandar')
