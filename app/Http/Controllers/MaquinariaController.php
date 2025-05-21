@@ -93,3 +93,4 @@ class MaquinariaController extends Controller
         return redirect()->route('maquinaria.index')->with('success', 'Maquinaria eliminada correctamente.');
     }
 }
+

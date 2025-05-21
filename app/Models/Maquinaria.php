@@ -9,7 +9,7 @@ class Maquinaria extends Model
 {
     use HasFactory;
 
-    protected $table = 'maquinaria'; // 👈 Soluciona el error
+    protected $table = 'maquinaria';
 
     protected $fillable = [
         'nombre',
@@ -20,6 +20,10 @@ class Maquinaria extends Model
         'id_estatus_maquinaria',
         'id_almacen',
         'borrado',
+    ];
+
+    protected $casts = [
+        'borrado' => 'boolean',
     ];
 
     // Relación con TipoMaquinaria
@@ -39,3 +43,4 @@ class Maquinaria extends Model
     return $this->belongsTo(EstatusMaquinaria::class, 'id_estatus_maquinaria');
 }
 }
+

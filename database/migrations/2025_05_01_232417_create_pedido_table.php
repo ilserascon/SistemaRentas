@@ -26,6 +26,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_repartidor')->nullable();
             $table->unsignedBigInteger('id_estatus_pedido');
             $table->boolean('borrado')->default(0);
+            $table->string('foto')->nullable();
+            $table->string('firma')->nullable();
             $table->timestamps();
 
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');

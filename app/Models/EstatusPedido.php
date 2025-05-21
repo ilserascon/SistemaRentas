@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class EstatusPedido extends Model
 {
     protected $table = 'estatus_pedido';
+
+    protected $fillable = ['descripcion'];
 }

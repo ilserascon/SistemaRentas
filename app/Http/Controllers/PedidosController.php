@@ -26,7 +26,7 @@ class PedidosController extends Controller
         // Cargar los pedidos con sus relaciones
         $pedidos = $query->with(['cliente', 'tipoMaquinaria', 'maquinaria', 'repartidor', 'estatusPedido', 'usuario'])->paginate(10);
 
-        // Obtener todos los repartidores
+        // Datos necesarios para el filtro y vista
         $repartidores = Repartidor::all();
 
         // Obtener todas las maquinarias DISPONIBLES (estatus 1) y NO borradas
@@ -58,6 +58,8 @@ class PedidosController extends Controller
         return view('pedidos.create', compact('clientes', 'maquinarias', 'repartidores', 'estatusPedidos', 'tipoMaquinarias', 'users'));
     }
 
+    
+
     public function store(Request $request)
     {
         $request->validate([
@@ -67,6 +69,7 @@ class PedidosController extends Controller
             'id_cliente' => 'required|integer|exists:clientes,id',
             'ubicacion_url' => 'required|url|max:65535',
             'id_tipo_maquinaria' => 'required|integer|exists:tipo_maquinaria,id',
+            
         ]);
 
         $data = $request->all();
@@ -125,4 +128,6 @@ class PedidosController extends Controller
 
         return redirect()->route('pedidos.index')->with('success', 'El pedido ha sido marcado como "En entrega".');
     }
+    
 }
+

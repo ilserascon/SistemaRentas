@@ -13,15 +13,15 @@
 
     <div class="section-body">
         @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 1500
-            });
-        </script>
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            </script>
         @endif
 
         <div class="card">
@@ -47,7 +47,6 @@
                             <td>{{ $r->telefono }}</td>
                             <td>{{ $r->email }}</td>
                             <td>
-                                <!-- Mostrar solo los repartidores no eliminados -->
                                 @if($r->borrado == 0)
                                     <a href="{{ route('repartidores.show', $r->id) }}" class="btn btn-primary btn-sm">Ver Pedidos</a>
                                     <a href="{{ route('repartidores.edit', $r->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
@@ -57,17 +56,18 @@
                                         <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $r->id }})"><i class="fas fa-trash"></i></button>
                                     </form>
                                 @else
-                                    <!-- Si está eliminado, mostrar que está eliminado y restaurarlo -->
                                     <span class="text-muted">Eliminado</span>
                                     <form action="{{ route('repartidores.restore', $r->id) }}" method="POST" class="d-inline">
                                         @csrf
-                                        <button class="btn btn-success btn-sm" onclick="return confirm('¿Estás seguro de restaurar este repartidor?')"><i class="fas fa-undo"></i> Restaurar</button>
+                                        <button class="btn btn-success btn-sm" onclick="return confirm('¿Estás seguro de restaurar este repartidor?')">
+                                            <i class="fas fa-undo"></i> Restaurar
+                                        </button>
                                     </form>
                                 @endif
                             </td>
                         </tr>
                         @empty
-                        <tr><td colspan="4" class="text-center">No hay repartidores registrados.</td></tr>
+                        <tr><td colspan="5" class="text-center">No hay repartidores registrados.</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -92,7 +92,6 @@
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                // Enviar el formulario de eliminación si el usuario confirma
                 document.getElementById('delete-form-' + id).submit();
             }
         });

@@ -33,7 +33,7 @@
           </div>
 
           <div class="form-group">
-            <label for="ubicacion_url">Ubicacion</label>
+            <label for="ubicacion_url">Ubicación</label>
             <textarea name="ubicacion_url" class="form-control @error('ubicacion_url') is-invalid @enderror">{{ old('ubicacion_url') }}</textarea>
             @error('ubicacion_url') <div class="invalid-feedback">{{ $message }}</div> @enderror
           </div>

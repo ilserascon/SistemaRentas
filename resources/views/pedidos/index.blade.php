@@ -5,7 +5,7 @@
 @section('content')
 <div class="section">
   <div class="section-header">
-    <h1>pedidos</h1>
+    <h1>Pedidos</h1>
     <div class="section-header-button ml-auto">
       <a href="{{ route('pedidos.create') }}" class="btn btn-primary">Nuevo Pedido</a>
     </div>
@@ -54,9 +54,9 @@
               <th>Observacion</th>
               <th>Fecha de entrega</th>
               <th>Fecha de entrega solicitada</th>
-              <th>Fecha de devolucion solicitada</th>
+              <th>Fecha de devolución solicitada</th>
               <th>Estatus</th>
-              <th>Creacion</th>
+              <th>Creación</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -271,3 +271,4 @@
 @endforeach
 
 @endsection
+
