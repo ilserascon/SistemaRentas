@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mantenimiento', function (Blueprint $table) {
+        Schema::create('estatus_maquinaria', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_falla');
-            $table->boolean('activo')->default(true);
+            $table->string('descripcion');
             $table->timestamps();
-
-            $table->foreign('id_falla')->references('id')->on('fallas')->onDelete('cascade');
         });
+
+        DB::table('estatus_maquinaria')->insert([
+            ['descripcion' => 'normal'],
+            ['descripcion' => 'falla'],
+            ['descripcion' => 'mantenimiento']
+        ]);
     }
 
     /**
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mantenimiento');
+        Schema::dropIfExists('estatus_maquinaria');
     }
 };

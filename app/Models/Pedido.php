@@ -9,6 +9,8 @@ class Pedido extends Model
 
 
 {
+    use HasFactory;
+
     protected $table = 'pedido';
 
     protected $fillable = [
@@ -17,14 +19,15 @@ class Pedido extends Model
         'fecha_entrega_solicitada',
         'fecha_devolucion_solicitada',
         'observacion',
-        'id_usuario',
         'id_cliente',
         'id_maquinaria',
         'id_repartidor',
         'id_estatus_pedido',
+        'id_usuario',
         'id_tipo_maquinaria',
         'ubicacion_url',
-        'borrado',];
+        'borrado',
+    ];
 
         public function usuario()
         {
@@ -53,13 +56,11 @@ class Pedido extends Model
         
         public function estatusPedido()
         {
-            return $this->belongsTo(EstatusPedido::class, 'id_estatus_pedido');}
+            return $this->belongsTo(EstatusPedido::class, 'id_estatus_pedido');
+        }
 
-            public function pedidos()
-{
-    return $this->hasMany(Pedido::class, 'id_estatus_pedido');
-}
-
-            
-
+        public function pedidos()
+        {
+            return $this->hasMany(Pedido::class, 'id_estatus_pedido');
+        }
 }

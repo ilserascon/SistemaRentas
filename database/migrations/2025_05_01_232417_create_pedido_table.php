@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pedido', function (Blueprint $table) {
             $table->id();
-            $table->string('folio');
+            $table->string('folio')->nullable();
             $table->datetime('fecha_en_entrega')->nullable();
             $table->datetime('fecha_entrega_solicitada');
             $table->datetime('fecha_devolucion_solicitada');
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_repartidor')->nullable();
             $table->unsignedBigInteger('id_estatus_pedido');
             $table->boolean('borrado')->default(0);
+            $table->string('foto')->nullable();
+            $table->string('firma')->nullable();
             $table->timestamps();
 
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');

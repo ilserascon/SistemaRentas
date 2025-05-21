@@ -11,7 +11,7 @@
       <li class="menu-header" style="color: #3e2d96">Menú</li>
 
       @if (Auth::check() && Auth::user()->role && Auth::user()->role->nombre === 'Administrador')
-        
+
         {{-- Usuarios --}}
         <li class="{{ request()->is('admin/users*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('admin.users.index') }}">
@@ -40,37 +40,66 @@
           </a>
         </li>
 
-        {{-- Maquinaria (Nuevo módulo) --}}
+        {{-- Mecanicos --}}
+        <li class="{{ request()->is('mecanicos*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('mecanicos.index') }}">
+            <i class="fas fa-wrench"></i> <span>Mecánicos</span>
+          </a>
+        </li>
+
+        {{-- Maquinaria --}}
         <li class="{{ request()->is('maquinaria*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('maquinaria.index') }}">
             <i class="fas fa-cogs"></i> <span>Maquinaria</span>
           </a>
         </li>
-        {{-- Pedido (Nuevo módulo) --}}
+
+        {{-- Pedidos --}}
         <li class="{{ request()->is('pedidos*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('pedidos.index') }}">
-            <i class="fas fa-warehouse"></i> <span>Pedidos</span>
+            <i class="fas fa-clipboard-list"></i> <span>Pedidos</span>
           </a>
-          </li>
+        </li>
 
-          {{-- fallas (Nuevo módulo) --}}
-        <li class="{{ request()->is('fallas*') ? 'active' : '' }}">
+        {{-- Entregas --}}
+      <li class="{{ request()->is('entregas*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('entregas.index') }}">
+          <i class="fas fa-truck-loading"></i> <span>Entregas</span>
+        </a>
+      </li>
+
+      {{-- Recibidos --}}
+      <li class="{{ request()->is('recibidos*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('recibidos.index') }}">
+          <i class="fas fa-box"></i> <span>Recibidos</span>
+        </a>
+      </li>
+
+          {{-- Fallas --}}
+          <li class="{{ request()->is('fallas*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('fallas.index') }}">
-            <i class="fas fa-warehouse"></i> <span>fallas</span>
+            <i class="fas fa-exclamation-triangle"></i> <span>Fallas</span>          
           </a>
           </li>
 
-
+          {{-- Mantenimiento --}}
+          <li class="{{ request()->is('mantenimiento*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('mantenimiento.index') }}">
+            <i class="fas fa-wrench"></i> <span>Mantenimiento</span>          
+          </a>
+        </li>
 
       @elseif (Auth::check() && Auth::user()->role && Auth::user()->role->nombre === 'Estandar')
+        {{-- Clientes (para usuarios estándar) --}}
         <li class="{{ request()->is('clientes*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('clientes.index') }}">
             <i class="fas fa-user-tie"></i> <span>Clientes</span>
           </a>
         </li>
       @endif
+
+      
       
     </ul>
   </aside>
 </div>
-

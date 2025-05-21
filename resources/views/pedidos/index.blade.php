@@ -5,7 +5,7 @@
 @section('content')
 <div class="section">
   <div class="section-header">
-    <h1>pedidos</h1>
+    <h1>Pedidos</h1>
     <div class="section-header-button ml-auto">
       <a href="{{ route('pedidos.create') }}" class="btn btn-primary">Nuevo Pedido</a>
     </div>
@@ -53,10 +53,11 @@
               <th>Maquinaria</th>
               <th>Ubicacion</th>
               <th>Observacion</th>
+              <th>Fecha de entrega</th>
               <th>Fecha de entrega solicitada</th>
-              <th>Fecha de devolucion solicitada</th>
+              <th>Fecha de devolución solicitada</th>
               <th>Estatus</th>
-              <th>Creacion</th>
+              <th>Creación</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -78,6 +79,7 @@
                   @endif
                 </td>
                 <td>{{ $pedido->observacion ?? 'Sin observaciones'}}</td>
+                <td>{{ $pedido->fecha_en_entrega ?? 'no asignada'}}</td>
                 <td>{{ $pedido->fecha_entrega_solicitada }}</td>
                 <td>{{ $pedido->fecha_devolucion_solicitada }}</td>
                 <td>{{ $pedido->estatusPedido->descripcion ?? 'Sin estatus' }}</td>
@@ -86,15 +88,20 @@
                   <button type="button" class="btn btn-primary btn-sm me-2 mb-2" data-toggle="modal" data-target="#asignarModal-{{ $pedido->id }}">
                     Asignar
                   </button>
-                  <form action="{{ route('pedidos.entregar', $pedido->id) }}" method="POST" class="d-inline">
-                    @csrf
-                    <button class="btn btn-success btn-sm me-2 mb-2" onclick="return confirm('¿Marcar este pedido como En entrega?')">Entregar</button>
-                  </form>
-                  @if($pedido->id_maquinaria)
-                  <button type="button" class="btn btn-warning btn-sm mb-2" data-toggle="modal" data-target="#fallaModal-{{ $pedido->id }}">
-                    Falla
+
+                  <!-- Botón para abrir el modal de entregar -->
+                  <button type="button" class="btn btn-success btn-sm me-2 mb-2" data-toggle="modal" data-target="#entregarModal-{{ $pedido->id }}">
+                    Entregar
                   </button>
-                @endif
+
+                  @if($pedido->id_maquinaria && 
+                      isset($pedido->maquinaria) && 
+                      $pedido->maquinaria->id_estatus_maquinaria == 1)
+                    <button type="button" class="btn btn-warning btn-sm mb-2" data-toggle="modal" data-target="#fallaModal-{{ $pedido->id }}">
+                      Falla
+                    </button>
+                  @endif
+
                   <button type="button" class="btn btn-danger btn-sm mb-2" data-toggle="modal" data-target="#cancelarModal-{{ $pedido->id }}">
                     Cancelar
                   </button>
@@ -108,6 +115,9 @@
             @endforelse
           </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+          {{ $pedidos->links() }}
+        </div>
       </div>
     </div>
   </div>
@@ -143,7 +153,7 @@
           @csrf
           <div class="form-group">
             <label for="id_repartidor-{{ $pedido->id }}">Repartidor</label>
-            <select name="id_repartidor" id="id_repartidor-{{ $pedido->id }}" class="form-control">
+            <select name="id_repartidor" id="id_repartidor-{{ $pedido->id }}" class="form-control" required>
               <option value="">Seleccione un repartidor</option>
               @foreach ($repartidores as $repartidor)
                 <option value="{{ $repartidor->id }}">{{ $repartidor->nombre }}</option>
@@ -153,7 +163,7 @@
 
           <div class="form-group">
             <label for="id_maquinaria-{{ $pedido->id }}">Maquinaria</label>
-            <select name="id_maquinaria" id="id_maquinaria-{{ $pedido->id }}" class="form-control">
+            <select name="id_maquinaria" id="id_maquinaria-{{ $pedido->id }}" class="form-control" required>
               <option value="">Seleccione una maquinaria</option>
               @foreach ($maquinarias->where('id_tipo_maquinaria', $pedido->id_tipo_maquinaria)->whereNotIn('id', $maquinariasEnRenta) as $maquinaria)
                 <option value="{{ $maquinaria->id }}">{{ $maquinaria->nombre }}</option>
@@ -175,42 +185,55 @@
 <div class="modal fade" id="cancelarModal-{{ $pedido->id }}" tabindex="-1" role="dialog" aria-labelledby="cancelarModalLabel-{{ $pedido->id }}" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cancelarModalLabel-{{ $pedido->id }}">Confirmar cancelación</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro que deseas cancelar el pedido con folio <strong>{{ $pedido->folio }}</strong>? 
-        <p><strong>Por favor, agrega una observación:</strong></p>
-        <div class="form-group">
-          <textarea name="observacion" class="form-control" placeholder="Escribe una observación..." required></textarea>
+      <form action="{{ route('pedidos.delete', $pedido->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <div class="modal-header">
+          <h5 class="modal-title" id="cancelarModalLabel-{{ $pedido->id }}">Confirmar cancelación</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <form action="{{ route('pedidos.delete', $pedido->id) }}" method="POST">
-          @csrf
-          @method('DELETE')
+        <div class="modal-body">
+          ¿Estás seguro que deseas cancelar el pedido con folio <strong>{{ $pedido->folio }}</strong>? 
+          <p><strong>Por favor, agrega una observación:</strong></p>
+          <div class="form-group">
+            <textarea name="observacion" class="form-control" placeholder="Escribe una observación..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           <button type="submit" class="btn btn-danger">Sí, Cancelar</button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-@endforeach
 
-
-
-{{-- Modales para cada pedido --}}
-@foreach ($pedidos as $pedido)
-  <!-- Modal Asignar -->
-  ...
-  <!-- Modal Cancelar -->
-  ...
-  <!-- Modal Falla -->
-  <div class="modal fade" id="fallaModal-{{ $pedido->id }}" tabindex="-1" role="dialog" aria-labelledby="fallaModalLabel-{{ $pedido->id }}" aria-hidden="true">
+<div class="modal fade" id="entregarModal-{{ $pedido->id }}" tabindex="-1" role="dialog" aria-labelledby="entregarModalLabel-{{ $pedido->id }}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="{{ route('pedidos.entregar', $pedido->id) }}" method="POST">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="entregarModalLabel-{{ $pedido->id }}">Confirmar entrega</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro que deseas marcar el pedido con folio <strong>{{ $pedido->folio }}</strong> como <b>En entrega</b>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Sí, entregar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal Falla -->
+<div class="modal fade" id="fallaModal-{{ $pedido->id }}" tabindex="-1" role="dialog" aria-labelledby="fallaModalLabel-{{ $pedido->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <form action="{{ route('fallas.store') }}" method="POST">
         @csrf
@@ -253,5 +276,5 @@
   </div>
 @endforeach
 
-
 @endsection
+
