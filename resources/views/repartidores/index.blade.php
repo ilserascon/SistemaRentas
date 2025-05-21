@@ -49,6 +49,7 @@
                             <td>
                                 <!-- Mostrar solo los repartidores no eliminados -->
                                 @if($r->borrado == 0)
+                                    <a href="{{ route('repartidores.show', $r->id) }}" class="btn btn-primary btn-sm">Ver Pedidos</a>
                                     <a href="{{ route('repartidores.edit', $r->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                     <form action="{{ route('repartidores.destroy', $r->id) }}" method="POST" class="d-inline" id="delete-form-{{ $r->id }}">
                                         @csrf
@@ -70,6 +71,9 @@
                         @endforelse
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                {{ $repartidores->links() }}
+                </div>
             </div>
         </div>
     </div>

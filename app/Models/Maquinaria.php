@@ -17,6 +17,7 @@ class Maquinaria extends Model
         'modelo',
         'descripcion',
         'id_tipo_maquinaria',
+        'id_estatus_maquinaria',
         'id_almacen',
         'borrado',
     ];
@@ -32,4 +33,9 @@ class Maquinaria extends Model
     {
         return $this->belongsTo(Almacen::class, 'id_almacen');
     }
+
+    public function estatusMaquinaria()
+{
+    return $this->belongsTo(EstatusMaquinaria::class, 'id_estatus_maquinaria');
+}
 }

@@ -9,7 +9,7 @@ class AlmacenController extends Controller
 {
     public function index()
     {
-        $almacenes = Almacen::where('borrado', 0)->get();
+        $almacenes = Almacen::where('borrado', 0)->paginate(10);
         return view('almacen.index', compact('almacenes'));
     }
 

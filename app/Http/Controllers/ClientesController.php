@@ -20,7 +20,7 @@ class ClientesController extends Controller
             $query->where('rfc', 'like', '%' . $request->rfc . '%');
         }
 
-        $clientes = $query->get();
+        $clientes = $query->paginate(10);
 
         return view('clientes.index', compact('clientes'));
     }

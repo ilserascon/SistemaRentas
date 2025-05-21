@@ -19,12 +19,14 @@
                 $table->text('descripcion');
 
                 $table->unsignedBigInteger('id_tipo_maquinaria');
+                $table->unsignedBigInteger('id_estatus_maquinaria');
                 $table->unsignedBigInteger('id_almacen');
                 $table->boolean('borrado')->default(0);
                 $table->timestamps();
 
                 $table->foreign('id_tipo_maquinaria')->references('id')->on('tipo_maquinaria')->onDelete('cascade');
                 $table->foreign('id_almacen')->references('id')->on('almacen')->onDelete('cascade');
+                $table->foreign('id_estatus_maquinaria')->references('id')->on('estatus_maquinaria')->onDelete('cascade');
             });
         }
 

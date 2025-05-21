@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Repartidor;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 
 class RepartidorController extends Controller
@@ -11,7 +12,7 @@ class RepartidorController extends Controller
     public function index()
     {
         // Solo se obtienen los repartidores cuyo campo 'borrado' es 0
-        $repartidores = Repartidor::where('borrado', 0)->get(); 
+        $repartidores = Repartidor::where('borrado', 0)->paginate(10); 
         return view('repartidores.index', compact('repartidores'));
     }
 
@@ -76,5 +77,26 @@ class RepartidorController extends Controller
 
         // Redirigir al índice con un mensaje de éxito
         return redirect()->route('repartidores.index')->with('success', 'Repartidor eliminado correctamente.');
+    }
+
+    public function show(Request $request, $id)
+    {
+        $repartidor = Repartidor::findOrFail($id);
+
+        $query = Pedido::where('id_repartidor', $id)
+            ->where('borrado', 0);
+
+        // Filtro por estatus si viene en la petición
+        if ($request->filled('estatus')) {
+            $query->where('id_estatus_pedido', $request->estatus);
+        }
+
+        $pedidos = $query->with(['cliente', 'tipoMaquinaria', 'maquinaria', 'repartidor', 'estatusPedido', 'usuario'])
+            ->paginate(10);
+
+        // Puedes pasar los estatus disponibles a la vista si lo necesitas
+        $estatusPedidos = \App\Models\EstatusPedido::all();
+
+        return view('repartidores.pedidos', compact('repartidor', 'pedidos', 'estatusPedidos'));
     }
 }

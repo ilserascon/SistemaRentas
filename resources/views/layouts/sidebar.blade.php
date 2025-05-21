@@ -49,7 +49,19 @@
         {{-- Pedido (Nuevo módulo) --}}
         <li class="{{ request()->is('pedidos*') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('pedidos.index') }}">
-            <i class="fas fa-warehouse"></i> <span>Pedidos</span>
+            <i class="fas fa-clipboard-list"></i> <span>Pedidos</span>
+          </a>
+          </li>
+
+          <li class="{{ request()->is('fallas*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('fallas.index') }}">
+            <i class="fas fa-exclamation-triangle"></i> <span>Fallas</span>          
+          </a>
+          </li>
+
+          <li class="{{ request()->is('mantenimiento*') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('mantenimiento.index') }}">
+            <i class="fas fa-wrench"></i> <span>Mantenimiento</span>          
           </a>
           </li>
 

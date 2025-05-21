@@ -14,16 +14,10 @@
         <form method="POST" action="{{ route('pedidos.store') }}">
           @csrf
 
-          <div class="form-group">
+          {{-- <div class="form-group">
             <label for="folio">Folio</label>
             <input name="folio" class="form-control @error('folio') is-invalid @enderror" value="{{ old('folio') }}" required>
             @error('folio') <div class="invalid-feedback">{{ $message }}</div> @enderror
-          </div>
-
-          {{-- <div class="form-group">
-            <label for="fecha_en_entrega">Fecha en Entrega</label>
-            <input type="datetime-local" name="fecha_en_entrega" class="form-control @error('fecha_en_entrega') is-invalid @enderror" value="{{ old('fecha_en_entrega') }}" required>
-            @error('fecha_en_entrega') <div class="invalid-feedback">{{ $message }}</div> @enderror
           </div> --}}
 
           <div class="form-group">
@@ -43,17 +37,6 @@
             <textarea name="ubicacion_url" class="form-control @error('ubicacion_url') is-invalid @enderror">{{ old('ubicacion_url') }}</textarea>
             @error('ubicacion_url') <div class="invalid-feedback">{{ $message }}</div> @enderror
           </div>
-
-          {{-- <div class="form-group">
-            <label for="id_usuario">Usuario</label>
-            <select name="id_usuario" class="form-control @error('id_usuario') is-invalid @enderror" required>
-              <option value="">Seleccione un usuario</option>
-              @foreach ($users as $user)
-                <option value="{{ $user->id }}" {{ old('id_usuario') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-              @endforeach
-            </select>
-            @error('id_usuario') <div class="invalid-feedback">{{ $message }}</div> @enderror
-          </div> --}}
 
           <div class="form-group">
             <label for="id_tipo_maquinaria">Tipo de maquinaria</label>
@@ -76,30 +59,6 @@
             </select>
             @error('id_cliente') <div class="invalid-feedback">{{ $message }}</div> @enderror
           </div>
-
-          {{-- <div class="form-group">
-            <label for="id_maquinaria">Maquinaria</label>
-            <select name="id_maquinaria" class="form-control @error('id_maquinaria') is-invalid @enderror" required>
-              <option value="">Seleccione una maquinaria</option>
-              @foreach ($maquinarias as $maquinaria)
-                <option value="{{ $maquinaria->id }}" {{ old('id_maquinaria') == $maquinaria->id ? 'selected' : '' }}>{{ $maquinaria->nombre }}</option>
-              @endforeach
-            </select>
-            @error('id_maquinaria') <div class="invalid-feedback">{{ $message }}</div> @enderror
-          </div>
-
-          <div class="form-group">
-            <label for="id_repartidor">Repartidor</label>
-            <select name="id_repartidor" class="form-control @error('id_repartidor') is-invalid @enderror" required>
-              <option value="">Seleccione un repartidor</option>
-              @foreach ($repartidores as $repartidor)
-                <option value="{{ $repartidor->id }}" {{ old('id_repartidor') == $repartidor->id ? 'selected' : '' }}>{{ $repartidor->nombre }}</option>
-              @endforeach
-            </select>
-            @error('id_repartidor') <div class="invalid-feedback">{{ $message }}</div> @enderror
-          </div> --}}
-
-          
 
           <button type="submit" class="btn btn-primary">Guardar</button>
           <a href="{{ route('pedidos.index') }}" class="btn btn-secondary">Cancelar</a>
