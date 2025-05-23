@@ -53,6 +53,7 @@
                             <th>Modelo</th>
                             <th>Descripción</th>
                             <th>Tipo de Maquinaria</th>
+                            <th>Estatus</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -64,6 +65,7 @@
                             <td>{{ $maquinaria->modelo }}</td>
                             <td>{{ $maquinaria->descripcion }}</td>
                             <td>{{ $maquinaria->tipoMaquinaria->descripcion ?? 'Sin tipo' }}</td>
+                            <td>{{ $maquinaria->EstatusMaquinaria->descripcion ?? 'Sin tipo' }}</td>
                             <td>
                                 <a href="{{ route('maquinaria.edit', $maquinaria->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('maquinaria.destroy', $maquinaria->id) }}" method="POST" class="d-inline" id="delete-form-{{ $maquinaria->id }}">
@@ -76,6 +78,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                {{ $maquinarias->links() }}
+                </div>
             </div>
         </div>
     </div>

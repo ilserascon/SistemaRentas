@@ -32,7 +32,7 @@
               <tr>
                 <td>{{ $pedido->id }}</td>
                 <td>{{ $pedido->folio }}</td>
-                <td>{{ $pedido->estatus->descripcion ?? 'Sin Estatus' }}</td>
+                <td>{{ $pedido->estatusPedido->descripcion ?? 'Sin Estatus' }}</td>
                 <td>
                   @if ($pedido->id_estatus_pedido == 3)
                     <a href="{{ route('entregas.showEntregar', $pedido->id) }}" class="btn btn-success btn-sm">Entregar</a>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pedido', function (Blueprint $table) {
             $table->id();
-            $table->string('folio');
+            $table->string('folio')->nullable();
             $table->datetime('fecha_en_entrega')->nullable();
             $table->datetime('fecha_entrega_solicitada');
             $table->datetime('fecha_devolucion_solicitada');

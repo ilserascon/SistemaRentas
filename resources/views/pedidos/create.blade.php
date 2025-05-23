@@ -14,11 +14,11 @@
         <form method="POST" action="{{ route('pedidos.store') }}">
           @csrf
 
-          <div class="form-group">
+          {{-- <div class="form-group">
             <label for="folio">Folio</label>
             <input name="folio" class="form-control @error('folio') is-invalid @enderror" value="{{ old('folio') }}" required>
             @error('folio') <div class="invalid-feedback">{{ $message }}</div> @enderror
-          </div>
+          </div> --}}
 
           <div class="form-group">
             <label for="fecha_entrega_solicitada">Fecha de Entrega Solicitada</label>
@@ -58,17 +58,6 @@
               @endforeach
             </select>
             @error('id_cliente') <div class="invalid-feedback">{{ $message }}</div> @enderror
-          </div>
-
-          <div class="form-group">
-            <label for="id_repartidor">Repartidor</label>
-            <select name="id_repartidor" class="form-control @error('id_repartidor') is-invalid @enderror" required>
-              <option value="">Seleccione un repartidor</option>
-              @foreach ($repartidores as $repartidor)
-                <option value="{{ $repartidor->id }}" {{ old('id_repartidor') == $repartidor->id ? 'selected' : '' }}>{{ $repartidor->nombre }}</option>
-              @endforeach
-            </select>
-            @error('id_repartidor') <div class="invalid-feedback">{{ $message }}</div> @enderror
           </div>
 
           <button type="submit" class="btn btn-primary">Guardar</button>

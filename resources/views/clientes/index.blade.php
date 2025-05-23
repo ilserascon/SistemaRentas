@@ -82,6 +82,9 @@
             @endforelse
           </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+          {{ $clientes->links() }}
+        </div>
       </div>
     </div>
   </div>

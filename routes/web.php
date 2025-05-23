@@ -8,6 +8,9 @@ use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\RepartidorController;
 use App\Http\Controllers\MaquinariaController;
 use App\Http\Controllers\PedidosController;
+use App\Http\Controllers\MantenimientoController;
+use App\Http\Controllers\FallasController;
+use App\Http\Controllers\MecanicosController;
 use Illuminate\Support\Facades\Auth;
 
 // Redireccionar raíz al login
@@ -41,7 +44,14 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
 Route::middleware('auth')->group(function () {
     Route::resource('almacen', AlmacenController::class);
     Route::resource('repartidores', RepartidorController::class);
+Route::get('/repartidores/{id}', [App\Http\Controllers\RepartidorController::class, 'show'])->name('repartidores.show');
     Route::resource('maquinaria', MaquinariaController::class);
+
+Route::resource('mantenimiento', MantenimientoController::class);
+Route::post('/mantenimiento/terminar/{id}', [MantenimientoController::class, 'terminar'])->name('mantenimiento.terminar');
+
+Route::resource('fallas', App\Http\Controllers\FallasController::class);
+Route::post('/fallas/enviar-mantenimiento/{id}', [FallasController::class, 'Mantenimiento'])->name('fallas.Mantenimiento');
 
     // Rutas pedidos
     Route::get('/pedidos', [PedidosController::class, 'index'])->name('pedidos.index');
@@ -70,3 +80,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/entregas/{id}/entregar', [EntregasController::class, 'entregar'])->name('entregas.entregar');
     Route::post('/entregas/{id}/cancelar', [EntregasController::class, 'cancelar'])->name('entregas.cancelar');
 });
+// Rutas para mecánicos
+Route::resource('mecanicos', MecanicosController::class);

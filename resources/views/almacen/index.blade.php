@@ -58,6 +58,9 @@
                         @endforelse
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                {{ $almacenes->links() }}
+                </div>
             </div>
         </div>
     </div>

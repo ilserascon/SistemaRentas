@@ -27,34 +27,38 @@ class Pedido extends Model
         'borrado',
     ];
 
-    // Relaciones
-    public function usuario()
-    {
-        return $this->belongsTo(User::class, 'id_usuario');
-    }
+        public function usuario()
+        {
+            return $this->belongsTo(User::class, 'id_usuario');
+        }
+        
+        public function tipoMaquinaria()
+        {
+            return $this->belongsTo(TipoMaquinaria::class, 'id_tipo_maquinaria');
+        }
+        
+        public function cliente()
+        {
+            return $this->belongsTo(Cliente::class, 'id_cliente');
+        }
+        
+        public function maquinaria()
+        {
+            return $this->belongsTo(Maquinaria::class, 'id_maquinaria');
+        }
+        
+        public function repartidor()
+        {
+            return $this->belongsTo(Repartidor::class, 'id_repartidor');
+        }
+        
+        public function estatusPedido()
+        {
+            return $this->belongsTo(EstatusPedido::class, 'id_estatus_pedido');
+        }
 
-    public function tipoMaquinaria()
-    {
-        return $this->belongsTo(TipoMaquinaria::class, 'id_tipo_maquinaria');
-    }
-
-    public function cliente()
-    {
-        return $this->belongsTo(Cliente::class, 'id_cliente');
-    }
-
-    public function maquinaria()
-    {
-        return $this->belongsTo(Maquinaria::class, 'id_maquinaria');
-    }
-
-    public function repartidor()
-    {
-        return $this->belongsTo(Repartidor::class, 'id_repartidor');
-    }
-
-    public function estatusPedido()
-    {
-        return $this->belongsTo(EstatusPedido::class, 'id_estatus_pedido');
-    }
+        public function pedidos()
+        {
+            return $this->hasMany(Pedido::class, 'id_estatus_pedido');
+        }
 }

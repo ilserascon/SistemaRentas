@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pedido;
 
-class entregasController extends Controller
+class EntregasController extends Controller
 {
     public function index()
     {
-        $pedidosEnEntrega = Pedido::with('estatus')
+        $pedidosEnEntrega = Pedido::with('estatusPedido')
             ->where('id_estatus_pedido', 3) // 3 corresponde a "En Entrega"
             ->get();
 
-        $pedidosCancelados = Pedido::with('estatus')
+        $pedidosCancelados = Pedido::with('estatusPedido')
             ->where('id_estatus_pedido', 6) // 6 corresponde a "Cancelado"
             ->get();
 

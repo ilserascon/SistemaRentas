@@ -23,7 +23,7 @@ class MaquinariaController extends Controller
             $query->where('nombre', 'like', '%' . $request->nombre . '%');
         }
 
-        $maquinarias = $query->get();
+        $maquinarias = $query->paginate(10);
 
         return view('maquinaria.index', compact('maquinarias'));
     }
@@ -48,7 +48,10 @@ class MaquinariaController extends Controller
             'id_almacen' => 'required|exists:almacen,id',
         ]);
 
-        Maquinaria::create($request->all());
+        $data = $request->all();
+        $data['id_estatus_maquinaria'] = 1; // Asignar estatus "normal" por defecto
+
+    Maquinaria::create($data);
 
         return redirect()->route('maquinaria.index')->with('success', 'Maquinaria creada correctamente.');
     }

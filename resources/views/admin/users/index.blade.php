@@ -40,19 +40,48 @@
                 <td>{{ $user->role->nombre ?? '-' }}</td>
                 <td>
                   <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                  <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
-                    @csrf @method('DELETE')
-                    <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar usuario?')"><i class="fas fa-trash"></i></button>
-                  </form>
+                  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eliminarModal-{{ $user->id }}">
+                    <i class="fas fa-trash"></i>
+                  </button>
                 </td>
               </tr>
             @empty
-              <tr><td colspan="4" class="text-center">No hay usuarios registrados.</td></tr>
+              <tr><td colspan="5" class="text-center">No hay usuarios registrados.</td></tr>
             @endforelse
           </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+          {{ $users->links() }}
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+{{-- Modales para cada usuario --}}
+@foreach ($users as $user)
+<div class="modal fade" id="eliminarModal-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel-{{ $user->id }}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarModalLabel-{{ $user->id }}">Confirmar eliminación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que deseas eliminar al usuario <strong>{{ $user->name }}</strong>?
+      </div>
+      <div class="modal-footer">
+        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
+          @csrf
+          @method('DELETE')
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach
 @endsection
