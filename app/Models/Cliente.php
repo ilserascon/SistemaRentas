@@ -9,4 +9,11 @@ class Cliente extends Model
 {
     protected $fillable = ['nombre','rfc','razon_social', 'telefono', 'email', 'direccion','codigo_postal', 'borrado'];
     protected $table = 'clientes';
+
+    public function pedidos()
+{
+    return $this->hasMany(Pedido::class, 'id_cliente');
 }
+
+}
+

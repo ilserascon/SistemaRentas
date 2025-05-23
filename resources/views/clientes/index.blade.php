@@ -70,10 +70,26 @@
                 <td>{{ $cliente->codigo_postal }}</td>
                 <td>{{ $cliente->created_at->format('d/m/Y') }}</td>
                 <td>
-                  <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-warning btn-sm me-2"><i class="fas fa-edit"></i></a>
-                  <form action="{{ route('clientes.delete', $cliente->id) }}" method="POST" class="d-inline me-2" id="delete-form-{{ $cliente->id }}">
-                    @csrf @method('DELETE')
-                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $cliente->id }})"><i class="fas fa-trash"></i></button>
+                    <div class="d-flex align-items-center">
+                      <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-warning btn-sm me-2">
+                        <i class="fas fa-edit"></i>
+                      </a>
+
+                      <form action="{{ route('clientes.delete', $cliente->id) }}" method="POST" class="d-inline me-2" id="delete-form-{{ $cliente->id }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $cliente->id }})">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </form>
+
+                      <a href="{{ route('clientes.pedidos', $cliente->id) }}" class="btn btn-info btn-sm me-2">
+  <i class="fas fa-list"></i> Ver Pedidos
+</a>
+
+                      </a>
+                    </div>
+
                   </form>
                 </td>
               </tr>

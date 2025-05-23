@@ -13,7 +13,15 @@
 
   <div class="section-body">
     @if (session('success'))
-      <div class="alert alert-success">{{ session('success') }}</div>
+      <script>
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: {!! json_encode(session('success')) !!},
+          showConfirmButton: false,
+          timer: 1500
+        });
+      </script>
     @endif
 
     <div class="card">

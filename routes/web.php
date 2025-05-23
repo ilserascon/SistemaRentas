@@ -65,6 +65,15 @@ Route::post('/fallas/enviar-mantenimiento/{id}', [FallasController::class, 'Mant
     Route::post('/pedidos/{id}/entregar', [PedidosController::class, 'entregar'])->name('pedidos.entregar');
 });
 
+//ruta para ver los pedidos de un cliente
+Route::get('clientes/{id}/pedidos', [ClientesController::class, 'pedidos'])->name('clientes.pedidos');
+
+// ...existing code...
+Route::post('/fallas', [App\Http\Controllers\FallaController::class, 'store'])->name('fallas.store');
+Route::get('/fallas', [App\Http\Controllers\FallaController::class, 'index'])->name('fallas.index');
+// ...existing code...
+
+
 // Rutas para recibidos
 Route::middleware('auth')->group(function () {
     Route::get('/recibidos', [RecibidosController::class, 'index'])->name('recibidos.index');

@@ -25,6 +25,7 @@
               <option value="{{ $estatus->id }}" {{ request('estatus') == $estatus->id ? 'selected' : '' }}>
                 {{ $estatus->descripcion }}
               </option>
+              
             @endforeach
           </select>
         </div>
@@ -104,6 +105,9 @@
                   <button type="button" class="btn btn-danger btn-sm mb-2" data-toggle="modal" data-target="#cancelarModal-{{ $pedido->id }}">
                     Cancelar
                   </button>
+                  
+                  
+                  
                 </td>
               </tr>
             @empty
@@ -121,6 +125,8 @@
 
 {{-- Modales para cada pedido --}}
 @foreach ($pedidos as $pedido)
+
+
 <!-- Modal Asignar -->
 <div class="modal fade" id="asignarModal-{{ $pedido->id }}" tabindex="-1" role="dialog" aria-labelledby="asignarModalLabel-{{ $pedido->id }}" aria-hidden="true">
   <div class="modal-dialog" role="document">

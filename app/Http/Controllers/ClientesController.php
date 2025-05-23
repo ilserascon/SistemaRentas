@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use App\Models\Pedido;
 
 class ClientesController extends Controller
 {
@@ -74,4 +75,27 @@ class ClientesController extends Controller
 
         return redirect()->route('clientes.index')->with('success', 'Cliente eliminado exitosamente.');
     }
+    
+
+
+
+    public function pedidos($id, Request $request)
+{
+    $cliente = Cliente::findOrFail($id);
+    $estatus = $request->input('estatus');
+
+    $pedidos = Pedido::with(['usuario', 'repartidor', 'tipoMaquinaria', 'maquinaria', 'estatusPedido'])
+        ->where('id_cliente', $id)
+        ->when($estatus, function ($query, $estatus) {
+            $query->whereHas('estatusPedido', function ($q) use ($estatus) {
+                $q->where('descripcion', $estatus);
+            });
+        })
+        ->get();
+
+    return view('clientes.pedidos', compact('cliente', 'pedidos'));
 }
+}
+
+
+
