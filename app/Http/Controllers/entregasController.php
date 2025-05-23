@@ -34,11 +34,17 @@ class EntregasController extends Controller
         $pedido = Pedido::where('id', $id)->firstOrFail();
 
         $request->validate([
-            'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'foto' => 'required|string',
             'firma' => 'required',
         ]);
 
-        $fotoPath = $request->file('foto')->store('fotos', 'public');
+        // Guardar la imagen base64 como archivo
+        $data = $request->input('foto');
+        $data = preg_replace('/^data:image\/\w+;base64,/', '', $data);
+        $data = base64_decode($data);
+        $nombreArchivo = 'foto_' . time() . '.png';
+        \Storage::disk('public')->put('fotos/' . $nombreArchivo, $data);
+        $fotoPath = 'fotos/' . $nombreArchivo;
 
         $pedido->update([
             'foto' => $fotoPath,
