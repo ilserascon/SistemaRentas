@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pedido');
             $table->boolean('activa')->default(true);
             $table->unsignedBigInteger('id_encargado');
+
             $table->timestamps();
 
             $table->foreign('id_tipo_falla')->references('id')->on('tipo_fallas')->onDelete('cascade');
